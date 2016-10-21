@@ -29,7 +29,7 @@ class AFT(val t: List[Double], val X: List[List[Double]], val v: List[Int],
           val prior: AFT.Prior) {
 
   import Distr._
-  import AFT.{Prior,mean,variance}
+  import AFT._
 
   private var distribution= "weibull"
   private def dist = distribution.toLowerCase match {
