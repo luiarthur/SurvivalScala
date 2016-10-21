@@ -1,7 +1,6 @@
 import org.scalatest.FunSuite
 
 class TestSuite extends FunSuite {
-  import MCMC.all._
 
   import math.sqrt
 
@@ -22,6 +21,7 @@ class TestSuite extends FunSuite {
     val v = XTV.map(xtv => xtv(2).toInt)
 
     import MCMC.all._
+    import AFT._
     Rand.reSeed(1L)
 
     val B = 10000
