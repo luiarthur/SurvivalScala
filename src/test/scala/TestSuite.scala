@@ -20,8 +20,8 @@ class TestSuite extends FunSuite {
     val t = XTV.map(xtv => xtv(1))
     val v = XTV.map(xtv => xtv(2).toInt)
 
-    import MCMC.all._
-    import AFT._
+    import MCMC.all.{Rand,timer}
+    import Survival.AFT
     Rand.reSeed(1L)
 
     val B = 10000
