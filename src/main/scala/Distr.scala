@@ -8,26 +8,26 @@ object Distr {
 
   trait ErrorDistribution {
     def logpdf(z: Double): Double
-    def cdf(z: Double): Double
+    def surv(z: Double): Double
   }
 
   object Normal extends ErrorDistribution {
     def logpdf(z: Double) = -(log(2.0*Pi) + z*z)/2.0
-    def cdf(z: Double) = N01.cumulativeProbability(z)
+    def surv(z: Double) = 1-N01.cumulativeProbability(z)
   }
 
   object Logistic extends ErrorDistribution {
     def logpdf(z: Double) = -z -2.0*log(1.0+exp(-z))
-    def cdf(z: Double) = 1/(exp(-z) + 1)
+    def surv(z: Double) = 1/(exp(z) + 1)
   }
 
   object ExtremeValue extends ErrorDistribution {
     // Wikipedia
     //def logpdf(z: Double) = -z-exp(-z)
-    //def cdf(z: Double) = exp(-exp(-z))
+    //def surv(z: Double) = 1-exp(-exp(-z))
     // R and Stats community
     def logpdf(z: Double) = z - exp(z)
-    def cdf(z: Double) = 1-exp(-exp(z))
+    def surv(z: Double) = exp(-exp(z))
   }
 
   trait TimeDistribution {
@@ -38,7 +38,8 @@ object Distr {
     }
     def logSurv(t: Double, mu: Double, s: Double) = {
       assert(t > 0 && s > 0, "t,s should be > 0")
-      log(1-errDistr.cdf((log(t)-mu)/s))
+      //log(1-errDistr.cdf((log(t)-mu)/s))
+      log(errDistr.surv((log(t)-mu)/s))
     }
   }
 
